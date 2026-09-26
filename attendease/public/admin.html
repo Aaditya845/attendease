@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AttendEase — Admin</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Attend<span>Ease</span> <span style="font-size:0.8rem; color:var(--ink-soft); font-weight:400;">Admin</span></div>
+  <div class="nav">
+    <button class="btn-link" id="logoutBtn">Log out</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="panel">
+    <h2>All students</h2>
+    <table>
+      <thead>
+        <tr><th>Roll No.</th><th>Name</th><th>Subjects</th><th>Overall %</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody id="studentTableBody"></tbody>
+    </table>
+    <p class="empty-state" id="noStudentsMsg" style="display:none;">
+      No student accounts yet. Run the seed script or wait for students to register.
+    </p>
+  </div>
+
+  <div class="panel" id="detailPanel" style="display:none;">
+    <h2 id="detailTitle">Student detail</h2>
+    <table>
+      <thead>
+        <tr><th>Subject</th><th>Attended</th><th>Total</th><th>%</th><th>Status</th></tr>
+      </thead>
+      <tbody id="detailTableBody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
