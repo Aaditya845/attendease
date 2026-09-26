@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AttendEase — Subjects</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Attend<span>Ease</span></div>
+  <div class="nav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="subjects.html" class="active">Subjects</a>
+    <button class="btn-link" id="logoutBtn">Log out</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="panel">
+    <h2>Add a subject</h2>
+    <form class="stacked" id="addSubjectForm">
+      <div>
+        <label for="subName">Subject name</label>
+        <input type="text" id="subName" placeholder="Computer Networks" required />
+      </div>
+      <div>
+        <label for="subCode">Subject code</label>
+        <input type="text" id="subCode" placeholder="CSE301" required />
+      </div>
+      <div>
+        <label for="subRequired">Required attendance (%)</label>
+        <input type="number" id="subRequired" min="1" max="100" value="75" required />
+      </div>
+      <p class="error-msg" id="addSubjectError"></p>
+      <button type="submit" class="primary">Add subject</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h2>Your subjects</h2>
+    <div id="subjectList"></div>
+  </div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/subjects.js"></script>
+</body>
+</html>

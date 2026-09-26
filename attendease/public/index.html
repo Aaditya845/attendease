@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AttendEase — Sign in</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Attend<span>Ease</span></div>
+</div>
+
+<div class="wrap">
+  <div class="panel auth-card">
+    <div class="tab-row">
+      <button class="tab-btn active" id="tabLogin">Log in</button>
+      <button class="tab-btn" id="tabRegister">Register</button>
+    </div>
+
+    <form class="stacked" id="loginForm">
+      <div>
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required autocomplete="email" />
+      </div>
+      <div>
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required autocomplete="current-password" />
+      </div>
+      <p class="error-msg" id="loginError"></p>
+      <button type="submit" class="primary">Log in</button>
+    </form>
+
+    <form class="stacked" id="registerForm" style="display:none;">
+      <div>
+        <label for="regName">Full name</label>
+        <input type="text" id="regName" required />
+      </div>
+      <div>
+        <label for="regRoll">Roll number</label>
+        <input type="text" id="regRoll" required />
+      </div>
+      <div>
+        <label for="regEmail">Email</label>
+        <input type="email" id="regEmail" required autocomplete="email" />
+      </div>
+      <div>
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" required autocomplete="new-password" />
+      </div>
+      <p class="error-msg" id="registerError"></p>
+      <button type="submit" class="primary">Create account</button>
+    </form>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
