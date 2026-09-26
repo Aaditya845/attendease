@@ -1,5 +1,5 @@
 if (getToken()) {
-  window.location.href = 'dashboard.html';
+  window.location.href = getRole() === 'admin' ? 'admin.html' : 'dashboard.html';
 }
 
 const tabLogin = document.getElementById('tabLogin');
@@ -33,8 +33,8 @@ loginForm.addEventListener('submit', async (e) => {
         password: document.getElementById('loginPassword').value
       })
     });
-    setSession(data.token, data.name);
-    window.location.href = 'dashboard.html';
+    setSession(data.token, data.name, data.role);
+    window.location.href = data.role === 'admin' ? 'admin.html' : 'dashboard.html';
   } catch (err) {
     errorEl.textContent = err.message;
   }
