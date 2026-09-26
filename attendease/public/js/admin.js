@@ -48,7 +48,10 @@ async function loadStudents() {
   }
 }
 
+let currentStudentId = null;
+
 async function loadDetail(studentId, name) {
+  currentStudentId = studentId;
   const panel = document.getElementById('detailPanel');
   const title = document.getElementById('detailTitle');
   const body = document.getElementById('detailTableBody');
@@ -59,17 +62,69 @@ async function loadDetail(studentId, name) {
     body.innerHTML = data.subjects.map((s) => `
       <tr>
         <td>${escapeHtml(s.name)} (${escapeHtml(s.code)})</td>
-        <td>${s.present}</td>
-        <td>${s.total}</td>
+        <td>
+          <input type="number" min="0" class="edit-present" data-subject-id="${s.id}" value="${s.present}" style="width:64px; display:inline-block;" />
+        </td>
+        <td>
+          <input type="number" min="0" class="edit-total" data-subject-id="${s.id}" value="${s.total}" style="width:64px; display:inline-block;" />
+        </td>
         <td>${s.percentage}%</td>
         <td><span class="status-pill status-${s.status}">${s.status}</span></td>
+        <td>
+          <div class="btn-row">
+            <button class="btn-small present" data-subject-id="${s.id}" data-status="present">Mark Present</button>
+            <button class="btn-small absent" data-subject-id="${s.id}" data-status="absent">Mark Absent</button>
+            <button class="btn-small" data-subject-id="${s.id}" data-action="save">Save</button>
+          </div>
+        </td>
       </tr>
     `).join('');
     panel.style.display = 'block';
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    attachDetailHandlers();
   } catch (err) {
     alert(err.message);
   }
+}
+
+function attachDetailHandlers() {
+  document.querySelectorAll('button[data-status]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await apiRequest(`/admin/students/${currentStudentId}/subjects/${btn.dataset.subjectId}/attendance`, {
+          method: 'POST',
+          body: JSON.stringify({ status: btn.dataset.status })
+        });
+        const name = document.getElementById('detailTitle').textContent.split(' —')[0];
+        loadDetail(currentStudentId, name);
+        loadStudents();
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+  });
+
+  document.querySelectorAll('button[data-action="save"]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const subjectId = btn.dataset.subjectId;
+      const presentInput = document.querySelector(`.edit-present[data-subject-id="${subjectId}"]`);
+      const totalInput = document.querySelector(`.edit-total[data-subject-id="${subjectId}"]`);
+      try {
+        await apiRequest(`/admin/students/${currentStudentId}/subjects/${subjectId}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            present: parseInt(presentInput.value, 10),
+            total: parseInt(totalInput.value, 10)
+          })
+        });
+        const name = document.getElementById('detailTitle').textContent.split(' —')[0];
+        loadDetail(currentStudentId, name);
+        loadStudents();
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+  });
 }
 
 function escapeHtml(str) {
