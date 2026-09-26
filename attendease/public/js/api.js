@@ -4,14 +4,20 @@ function getToken() {
   return localStorage.getItem('attendease_token');
 }
 
-function setSession(token, name) {
+function setSession(token, name, role) {
   localStorage.setItem('attendease_token', token);
   localStorage.setItem('attendease_name', name || '');
+  localStorage.setItem('attendease_role', role || 'student');
+}
+
+function getRole() {
+  return localStorage.getItem('attendease_role') || 'student';
 }
 
 function clearSession() {
   localStorage.removeItem('attendease_token');
   localStorage.removeItem('attendease_name');
+  localStorage.removeItem('attendease_role');
 }
 
 async function apiRequest(path, options = {}) {
